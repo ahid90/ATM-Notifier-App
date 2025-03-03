@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'  // إذا كنت تستخدم Kotlin
+}
+
+android {
+    compileSdkVersion 33  // حدد إصدار الـ SDK
+    defaultConfig {
+        applicationId "com.example.atmnotifierapp"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    // أضف المكتبات الأخرى حسب احتياجاتك
+}
