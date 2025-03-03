@@ -27,10 +27,11 @@ jobs:
         with:
           android-version: '30'  # التأكد من استخدام الإصدار الصحيح من Android SDK
 
-      # الخطوة 4: إعداد البيئة لتثبيت التبعيات
+      # الخطوة 4: إعداد Gradle
       - name: Set up Gradle
-        run: |
-          ./gradlew --version  # تأكد من أن Gradle مثبت
+        uses: gradle/wrapper-validation-action@v1  # تثبيت Gradle إذا لم يكن موجودًا
+        with:
+          gradle-version: '7.4.2'  # تأكد من أن إصدار Gradle يتناسب مع مشروعك
 
       # الخطوة 5: بناء APK
       - name: Build APK
