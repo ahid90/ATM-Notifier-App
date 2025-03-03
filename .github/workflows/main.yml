@@ -27,15 +27,14 @@ jobs:
         with:
           android-version: '30'  # التأكد من استخدام الإصدار الصحيح من Android SDK
 
-      # الخطوة 4: إعداد Gradle
-      - name: Set up Gradle
-        uses: gradle/wrapper-validation-action@v1  # تثبيت Gradle إذا لم يكن موجودًا
-        with:
-          gradle-version: '7.4.2'  # تأكد من أن إصدار Gradle يتناسب مع مشروعك
+      # الخطوة 4: تثبيت Gradle باستخدام SDKMAN
+      - name: Install Gradle
+        run: |
+          sdk install gradle  # استخدام SDKMAN لتثبيت Gradle
 
       # الخطوة 5: بناء APK
       - name: Build APK
-        run: ./gradlew assembleRelease  # بناء ملف APK للإصدار
+        run: gradle assembleRelease  # بناء ملف APK للإصدار
 
       # الخطوة 6: رفع APK كـ artifact باستخدام الإصدار v4
       - name: Upload APK as artifact
