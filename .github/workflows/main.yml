@@ -32,15 +32,19 @@ jobs:
         run: |
           sudo apt-get install -y gradle  # تثبيت Gradle مباشرة باستخدام apt-get
 
-      # الخطوة 5: بناء APK
-      - name: Build APK
-        run: gradle assembleRelease  # بناء APK باستخدام Gradle
+      # الخطوة 5: عرض قائمة المهام المتاحة
+      - name: List available Gradle tasks
+        run: gradle tasks
 
-      # الخطوة 6: التأكد من أن الـ APK تم إنشاؤه
+      # الخطوة 6: بناء APK
+      - name: Build APK
+        run: gradle assembleRelease  # استخدم المهمة المناسبة حسب ما تم العثور عليه
+
+      # الخطوة 7: التأكد من أن الـ APK تم إنشاؤه
       - name: List APK directory
         run: ls -l app/build/outputs/apk/release/
 
-      # الخطوة 7: رفع APK كـ artifact
+      # الخطوة 8: رفع APK كـ artifact
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
