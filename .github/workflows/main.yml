@@ -14,12 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # الخطوة 2: إعداد JDK 11 مع توزيع AdoptOpenJDK
+      # الخطوة 2: إعداد JDK 11 مع توزيع Temurin
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'  # تحديد توزيع JDK
+          distribution: 'temurin'  # استخدام توزيعة Temurin
 
       # الخطوة 3: إعداد Android SDK
       - name: Set up Android SDK
