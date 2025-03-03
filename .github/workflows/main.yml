@@ -34,12 +34,15 @@ jobs:
           source $HOME/.sdkman/bin/sdkman-init.sh
           sdk install gradle  # تثبيت Gradle باستخدام SDKMAN
 
-      # الخطوة 5: بناء APK باستخدام Gradle (مع استخدام Gradle Wrapper إذا كان موجودًا)
+      # الخطوة 5: بناء APK باستخدام Gradle
       - name: Build APK using Gradle
-        run: ./gradlew assembleDebug  # استخدام Gradle Wrapper إذا كان موجودًا
-        continue-on-error: true  # استمر في تنفيذ البناء حتى إذا فشل في العثور على ملف Gradle Wrapper
+        run: gradle assembleDebug  # استخدم Gradle المثبت عالميًا
 
-      # الخطوة 6: رفع APK كـ Artifact
+      # الخطوة 6: عرض الملفات في مجلد البناء للتحقق من مكان الـ APK
+      - name: List files in build directory
+        run: ls -R app/build/outputs/apk/
+
+      # الخطوة 7: رفع APK كـ Artifact
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
