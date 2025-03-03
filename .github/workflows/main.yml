@@ -27,15 +27,14 @@ jobs:
         with:
           android-version: '30'
 
-      # الخطوة 4: تثبيت Gradle باستخدام setup-gradle
-      - name: Set up Gradle
-        uses: gradle/wrapper-validation-action@v1
-        with:
-          gradle-version: '7.0'  # تحديد الإصدار الذي ترغب فيه
+      # الخطوة 4: تثبيت Gradle باستخدام أداة apt-get
+      - name: Install Gradle
+        run: |
+          sudo apt-get install -y gradle  # تثبيت Gradle مباشرة باستخدام apt-get
 
       # الخطوة 5: بناء APK
       - name: Build APK
-        run: ./gradlew assembleRelease  # استخدم gradlew إذا كان موجودًا في المشروع
+        run: gradle assembleRelease  # بناء APK باستخدام Gradle
 
       # الخطوة 6: التأكد من أن الـ APK تم إنشاؤه
       - name: List APK directory
