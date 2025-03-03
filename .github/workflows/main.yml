@@ -14,18 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # الخطوة 2: إعداد JDK 11 مع توزيع Temurin
-      - name: Set up JDK 11
+      # الخطوة 2: إعداد JDK 17 مع توزيع Temurin
+      - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'  # استخدام توزيعة Temurin
 
-      # الخطوة 3: إعداد Android SDK
+      # الخطوة 3: إعداد Android SDK باستخدام setup-android
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
-          sdk-version: '30'  # تأكد من أن هذا الإصدار يتوافق مع مشروعك
+          android-version: '30'  # التأكد من استخدام الإصدار الصحيح من Android SDK
 
       # الخطوة 4: إعداد البيئة لتثبيت التبعيات
       - name: Set up Gradle
