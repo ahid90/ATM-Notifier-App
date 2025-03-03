@@ -27,7 +27,7 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload APK
-        uses: github/artifact-upload-action@v1
+        uses: github/upload-artifact@v1
         with:
           name: ATM-Notifier-App
           path: app/build/outputs/apk/debug/app-debug.apk
