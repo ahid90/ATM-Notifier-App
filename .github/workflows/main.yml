@@ -1,33 +1,43 @@
-name: Build Android APK
+name: Build APK for ATM-Notifier-App
 
 on:
   push:
     branches:
-      - main
+      - main  # يمكن تغييرها إلى الفرع الذي تستخدمه
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      # الخطوة 1: تحقق من الكود
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      # الخطوة 2: إعداد JDK 11
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          java-version: '11'
 
+      # الخطوة 3: إعداد Android SDK
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Build APK
-        run: |
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/artifact@v1
+        uses: android-actions/setup-android@v2
         with:
-          name: ATM-Notifier-App
-          path: app/build/outputs/apk/debug/app-debug.apk
+          sdk-version: '30'  # تأكد من أن هذا الإصدار يتوافق مع مشروعك
+
+      # الخطوة 4: إعداد البيئة لتثبيت التبعيات
+      - name: Set up Gradle
+        run: |
+          ./gradlew --version  # تأكد من أن Gradle مثبت
+
+      # الخطوة 5: بناء APK
+      - name: Build APK
+        run: ./gradlew assembleRelease  # بناء ملف APK للإصدار
+
+      # الخطوة 6: رفع APK كـ artifact
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: atm-notifier-apk
+          path: app/build/outputs/apk/release/app-release.apk
