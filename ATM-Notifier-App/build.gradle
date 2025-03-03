@@ -1,0 +1,11 @@
+// ملف البناء الجذري
+plugins {
+    id 'com.android.application' version '7.3.1' apply false  // تطبيق الإضافة الخاصة بـ Android
+}
+
+allprojects {
+    repositories {
+        google()        // مستودع Google
+        mavenCentral()  // مستودع Maven
+    }
+}
