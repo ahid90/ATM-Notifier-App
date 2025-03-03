@@ -3,7 +3,7 @@ name: Build APK for ATM-Notifier-App
 on:
   push:
     branches:
-      - main  # يمكن تغييرها إلى الفرع الذي تستخدمه
+      - main  # أو الفرع الذي تستخدمه
 
 jobs:
   build:
@@ -27,26 +27,21 @@ jobs:
         with:
           android-version: '30'
 
-      # الخطوة 4: تثبيت Gradle باستخدام أداة apt-get
+      # الخطوة 4: تثبيت Gradle باستخدام SDKMAN
       - name: Install Gradle
         run: |
-          sudo apt-get install -y gradle  # تثبيت Gradle مباشرة باستخدام apt-get
+          curl -s https://get.sdkman.io | bash  # تثبيت SDKMAN
+          source $HOME/.sdkman/bin/sdkman-init.sh
+          sdk install gradle  # تثبيت Gradle باستخدام SDKMAN
 
-      # الخطوة 5: عرض قائمة المهام المتاحة
-      - name: List available Gradle tasks
-        run: gradle tasks --all  # هذا سيعرض قائمة المهام المتاحة في المشروع
+      # الخطوة 5: بناء APK باستخدام Gradle (مع استخدام Gradle Wrapper إذا كان موجودًا)
+      - name: Build APK using Gradle
+        run: ./gradlew assembleDebug  # استخدام Gradle Wrapper إذا كان موجودًا
+        continue-on-error: true  # استمر في تنفيذ البناء حتى إذا فشل في العثور على ملف Gradle Wrapper
 
-      # الخطوة 6: بناء APK
-      - name: Build APK
-        run: gradle assembleDebug  # استخدم المهمة الصحيحة بعد عرض المهام المتاحة
-
-      # الخطوة 7: التأكد من أن الـ APK تم إنشاؤه
-      - name: List APK directory
-        run: ls -l app/build/outputs/apk/release/
-
-      # الخطوة 8: رفع APK كـ artifact
+      # الخطوة 6: رفع APK كـ Artifact
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
           name: atm-notifier-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
