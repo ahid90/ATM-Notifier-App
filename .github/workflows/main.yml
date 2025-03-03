@@ -19,24 +19,29 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'temurin'  # استخدام توزيعة Temurin
+          distribution: 'temurin'
 
       # الخطوة 3: إعداد Android SDK باستخدام setup-android
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
-          android-version: '30'  # التأكد من استخدام الإصدار الصحيح من Android SDK
+          android-version: '30'
 
-      # الخطوة 4: تثبيت Gradle باستخدام SDKMAN
-      - name: Install Gradle
-        run: |
-          sdk install gradle  # استخدام SDKMAN لتثبيت Gradle
+      # الخطوة 4: تثبيت Gradle باستخدام setup-gradle
+      - name: Set up Gradle
+        uses: gradle/wrapper-validation-action@v1
+        with:
+          gradle-version: '7.0'  # تحديد الإصدار الذي ترغب فيه
 
       # الخطوة 5: بناء APK
       - name: Build APK
-        run: gradle assembleRelease  # بناء ملف APK للإصدار
+        run: ./gradlew assembleRelease  # استخدم gradlew إذا كان موجودًا في المشروع
 
-      # الخطوة 6: رفع APK كـ artifact باستخدام الإصدار v4
+      # الخطوة 6: التأكد من أن الـ APK تم إنشاؤه
+      - name: List APK directory
+        run: ls -l app/build/outputs/apk/release/
+
+      # الخطوة 7: رفع APK كـ artifact
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
